@@ -110,9 +110,10 @@ def local_css():
             opacity: 0.92;
             line-height: 1.9;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            text-align: center !important;
+            display: block;
         }
         .hero-badges {
             display: flex;
@@ -529,7 +530,7 @@ def hero_section():
                 政経進学を確実にする、<br>
                 <em class="highlight">評定管理</em>と<em class="highlight">大学先取り教育</em>。
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle" style="text-align:center;margin-left:auto;margin-right:auto;">
                 講師は全員、学院から政治経済学部へ進んだ現役早大生。<br>
                 評定 85 点以上・特別考査上位の実績を持つ先輩が、<br>
                 あなたのお子さんの内部進学を徹底的にサポートします。
@@ -542,12 +543,13 @@ def hero_section():
         </div>
     """, unsafe_allow_html=True)
 
-    # CTA: 純粋HTMLアンカー — Streamlitのst.buttonによる再レンダリングを回避してスクロールバグを修正
+    # CTA: HTMLアンカー — st.markdown はメインDOMに直接レンダリングされるため
+    # window.parent 不要。document.getElementById で確実にスクロール。
     st.markdown("""
         <div style="text-align:center;margin-bottom:3rem;">
             <a class="btn-scroll"
-               href="#"
-               onclick="window.parent.document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return false;">
+               href="#contact"
+               onclick="var el=document.getElementById('contact'); if(el){el.scrollIntoView({behavior:'smooth'});}; return false;">
                 相談に申し込む(無料)
             </a>
         </div>
@@ -637,7 +639,7 @@ def features_section():
     with col1:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:1.75rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
+            <h3 style="font-size:2rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 教えるのは<strong>評定85点以上・特考上位</strong>で政経へ内部進学した現役早大生のみ。
                 同じカリキュラム、同じ先生の採点傾向、同じプレッシャーを乗り越えた経験が、
@@ -656,7 +658,7 @@ def features_section():
     with col2:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:1.75rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
+            <h3 style="font-size:2rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 学院の評定は、なんとなくの勉強では上がりません。
                 <strong>教員ごとの出題傾向・採点基準・特考との配点バランス</strong>を把握したうえで、
@@ -676,118 +678,6 @@ def features_section():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
 
-def courses_section():
-    st.markdown("""
-        <div class="section-header">
-            <div class="section-eyebrow">COURSE LINEUP</div>
-            <h2>2つの指導コース</h2>
-            <p>今いる学年・状況に合わせて、最適なコースをお選びください。</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2, gap="large")
-
-    with col1:
-        st.markdown("""
-        <div class="course-card">
-            <div class="course-header">
-                <div class="course-tag">高1 〜 高3 対象</div>
-                <h3>内部進学 戦略コース</h3>
-                <p style="margin:0.5rem 0 0;font-size:0.88rem;opacity:0.85;">
-                    政経・法・商・理工——志望学部のボーダーを確実に超えるための評定管理。
-                </p>
-            </div>
-            <div class="course-body">
-                <div class="course-item">
-                    <div class="course-item-icon">🇩🇪</div>
-                    <div>
-                        <strong>第二外国語（独・仏・露・中）</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">学院の授業進度・教員傾向に完全対応。評定を最大化する定期テスト集中対策。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon">📐</div>
-                    <div>
-                        <strong>数学（特考・定期テスト）</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">記述の部分点を最大化する答案術。特考の過去問傾向分析と演習。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon">🇬🇧</div>
-                    <div>
-                        <strong>英語（定期テスト・英作文）</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">安定した高得点を維持し、他科目の「保険」として機能させる。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon">📝</div>
-                    <div>
-                        <strong>評定ロードマップ設計</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">入会時に現在の評定を診断し、志望学部のボーダーまでの最短経路を設計。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon">🗓️</div>
-                    <div>
-                        <strong>月次進捗レポート</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">テスト結果をもとに、次学期の戦略を保護者へご報告。</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    with col2:
-        st.markdown("""
-        <div class="course-card">
-            <div class="course-header" style="background: linear-gradient(135deg, #1e3a5f, #2563EB);">
-                <div class="course-tag">内部進学確定後 〜 大学1年生対象</div>
-                <h3>早大 入学準備プログラム</h3>
-                <p style="margin:0.5rem 0 0;font-size:0.88rem;opacity:0.85;">
-                    政経・法・商の授業で「最初から差をつける」ための大学入学前の先取り教育。
-                </p>
-            </div>
-            <div class="course-body">
-                <div class="course-item">
-                    <div class="course-item-icon" style="background:#EFF6FF;">📄</div>
-                    <div>
-                        <strong>アカデミックライティング基礎</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">大学レポートの構成・引用・論証の型。最初の課題提出から差がつくスキル。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon" style="background:#EFF6FF;">📚</div>
-                    <div>
-                        <strong>専門書・論文の速読術</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">政経・法・商で毎週課される文献を効率よく読む技術。Abstract から仮説を読む方法。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon" style="background:#EFF6FF;">💹</div>
-                    <div>
-                        <strong>経済学・政治学の先取りインプット</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">ミクロ経済学・統計の直観的理解。政経1年生がつまずく内容を先に攻略。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon" style="background:#EFF6FF;">🌏</div>
-                    <div>
-                        <strong>学術英語 読解 & TOEIC対策</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">英語論文の読み方・ゼミ選考に向けたTOEICスコアの底上げ。</span>
-                    </div>
-                </div>
-                <div class="course-item">
-                    <div class="course-item-icon" style="background:#EFF6FF;">🎓</div>
-                    <div>
-                        <strong>先輩面談（政経・法・商）</strong><br>
-                        <span style="font-size:0.85rem;color:#666;">ゼミ・サークル・就活——パンフレットにないリアルな大学生活を現役先輩から。</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<br><br>", unsafe_allow_html=True)
 
 
 def instructors_section():
@@ -1163,9 +1053,6 @@ def main():
 
     st.divider()
     features_section()
-
-    st.divider()
-    courses_section()
 
     st.divider()
     instructors_section()
