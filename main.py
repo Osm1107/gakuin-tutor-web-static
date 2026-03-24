@@ -735,7 +735,7 @@ def save_to_sheet(name, user_email, grade, desired_dept, strengthen_subjects, su
             if result.get("status") == "error":
                 st.error(f"GAS Logic Error: {result.get('message')}")
                 return False
-        except:
+        except Exception:
             pass
         if response.status_code != 200:
             st.error(f"GAS Error ({response.status_code}): {response.text}")
