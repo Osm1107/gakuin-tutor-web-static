@@ -82,13 +82,16 @@ def local_css():
         .hero-eyebrow {
             display: inline-block;
             background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50px;
-            padding: 0.35rem 1.2rem;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            color: rgba(255,255,255,0.9);
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 60px;
+            padding: 0.7rem 2.5rem;
+            font-size: 1.55rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            margin-bottom: 2rem;
+            color: #FFFFFF;
+            font-family: 'Noto Serif JP', serif;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.25);
         }
         .hero-title {
             font-size: clamp(2.6rem, 5.5vw, 4.2rem);
@@ -102,13 +105,14 @@ def local_css():
             font-style: normal;
         }
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-bottom: 2.5rem;
-            opacity: 0.88;
-            line-height: 1.8;
-            max-width: 680px;
+            opacity: 0.92;
+            line-height: 1.9;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            text-align: center;
         }
         .hero-badges {
             display: flex;
@@ -543,7 +547,7 @@ def hero_section():
         <div style="text-align:center;margin-bottom:3rem;">
             <a class="btn-scroll"
                href="#"
-               onclick="window.parent.document.getElementById('contact-form').scrollIntoView({behavior:'smooth'}); return false;">
+               onclick="window.parent.document.getElementById('contact').scrollIntoView({behavior:'smooth'}); return false;">
                 相談に申し込む(無料)
             </a>
         </div>
@@ -633,7 +637,7 @@ def features_section():
     with col1:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:1.5rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
+            <h3 style="font-size:1.75rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 教えるのは<strong>評定85点以上・特考上位</strong>で政経へ内部進学した現役早大生のみ。
                 同じカリキュラム、同じ先生の採点傾向、同じプレッシャーを乗り越えた経験が、
@@ -652,7 +656,7 @@ def features_section():
     with col2:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:1.5rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
+            <h3 style="font-size:1.75rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 学院の評定は、なんとなくの勉強では上がりません。
                 <strong>教員ごとの出題傾向・採点基準・特考との配点バランス</strong>を把握したうえで、
@@ -919,19 +923,35 @@ def pricing_section():
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns(3, gap="large")
+    col0, col1, col2, col3 = st.columns(4, gap="medium")
+
+    with col0:
+        st.markdown("""
+        <div class="pricing-card" style="border-top: 4px solid #2563EB;">
+            <h3 style="font-size:1.05rem;margin-bottom:0.25rem;">🏫 中学部 基礎固めプラン</h3>
+            <p style="font-size:0.82rem;color:#666;margin-bottom:1rem;">中学部在校生・保護者向け</p>
+            <div class="pricing-price" style="font-size:2rem;">¥40,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.78rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
+            <ul class="pricing-list">
+                <li>✅ 定期テスト対策（全教科）</li>
+                <li>✅ 高校内部進学を見据えた記述力強化</li>
+                <li>✅ 数学・英語の基礎徹底</li>
+                <li>✅ LINEでの質問サポート</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col1:
         st.markdown("""
         <div class="pricing-card">
-            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">A. スタンダード</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">内部進学の基礎固めに</p>
-            <div class="pricing-price">¥40,000<span class="pricing-unit"> / 月（税込）</span></div>
-            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
+            <h3 style="font-size:1.05rem;margin-bottom:0.25rem;">A. スタンダード</h3>
+            <p style="font-size:0.82rem;color:#666;margin-bottom:1rem;">内部進学の基礎固めに</p>
+            <div class="pricing-price" style="font-size:2rem;">¥40,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.78rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
                 <li>✅ 定期テスト・特考対策</li>
-                <li>✅ 第二外国語（独・仏・露・中）対応</li>
-                <li>✅ 全教科 対応</li>
+                <li>✅ 第二外国語（独・仏・露・中）</li>
+                <li>✅ 全教科対応</li>
                 <li>✅ LINEでの質問サポート</li>
                 <li>✅ 評定ロードマップ設計（初回）</li>
             </ul>
@@ -942,10 +962,10 @@ def pricing_section():
         st.markdown("""
         <div class="pricing-card featured">
             <div class="pricing-badge">おすすめ</div>
-            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">B. プレミアム</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">政経ボーダー突破に</p>
-            <div class="pricing-price">¥50,000<span class="pricing-unit"> / 月（税込）</span></div>
-            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
+            <h3 style="font-size:1.05rem;margin-bottom:0.25rem;">B. プレミアム</h3>
+            <p style="font-size:0.82rem;color:#666;margin-bottom:1rem;">政経ボーダー突破に</p>
+            <div class="pricing-price" style="font-size:2rem;">¥50,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.78rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
                 <li>✅ スタンダードの全内容</li>
                 <li>✅ 月次評定レポート（保護者向け）</li>
@@ -959,16 +979,16 @@ def pricing_section():
     with col3:
         st.markdown("""
         <div class="pricing-card">
-            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">C. プラチナ</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">大学入学後まで見据えた完全サポート</p>
-            <div class="pricing-price">¥50,000<span class="pricing-unit"> / 月（税込）</span></div>
-            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
+            <h3 style="font-size:1.05rem;margin-bottom:0.25rem;">C. プラチナ</h3>
+            <p style="font-size:0.82rem;color:#666;margin-bottom:1rem;">大学まで見据えた完全サポート</p>
+            <div class="pricing-price" style="font-size:2rem;">¥60,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.78rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
                 <li>✅ プレミアムの全内容</li>
                 <li>✅ 早大入学準備プログラム込み</li>
                 <li>✅ アカデミックライティング指導</li>
                 <li>✅ キャリア・ゼミ選び 先輩面談</li>
-                <li>✅ TOEIC・学術英語 対策</li>
+                <li>✅ TOEIC・学術英語対策</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -978,7 +998,7 @@ def pricing_section():
 
 def contact_section():
     st.markdown("""
-        <div id="contact-form" class="section-header">
+        <div id="contact" class="section-header">
             <div class="section-eyebrow">FREE CONSULTATION</div>
             <h2>無料相談・お申し込み</h2>
             <p>現在の評定と志望学部をお教えください。<br>
@@ -1007,16 +1027,18 @@ def contact_section():
         </div>
     """, unsafe_allow_html=True)
 
-    col_form, _ = st.columns([3, 1])
+    _, col_form, _ = st.columns([1, 4, 1])
 
     with col_form:
         with st.form("contact_form"):
             r1c1, r1c2 = st.columns(2)
             with r1c1:
-                name = st.text_input("お名前 （必須）", placeholder="例：山田 花子")
+                name = st.text_input("お名前 （必須）", placeholder="早稲田太郎")
                 email = st.text_input("メールアドレス （必須）", placeholder="example@email.com")
                 grade = st.selectbox("お子さんの学年 （必須）", [
-                    "高校1年生", "高校2年生", "高校3年生", "大学1年生（準備中）"
+                    "中学1年生", "中学2年生", "中学3年生",
+                    "高校1年生", "高校2年生", "高校3年生",
+                    "大学1年生（準備中）"
                 ])
             with r1c2:
                 desired_dept = st.selectbox("第一志望学部 （必須）", [
@@ -1035,7 +1057,15 @@ def contact_section():
                     "大学入学準備（レポート・英語等）"
                 ])
                 subject = st.text_input("ご相談の件名 （必須）", placeholder="例：政経ボーダーに向けた評定対策について")
-                date = st.date_input("体験希望日", min_value=datetime.date.today())
+
+            date_col, time_col = st.columns(2)
+            with date_col:
+                date = st.date_input("面談希望日", min_value=datetime.date.today())
+            with time_col:
+                preferred_time = st.selectbox("面談希望時間", [
+                    "17:00", "17:30", "18:00", "18:30", "19:00",
+                    "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"
+                ])
 
             message = st.text_area("詳細なご相談内容（任意）", height=130,
                 placeholder="現在の評定の状況、特に困っている科目、目指している学部など、何でもお書きください。")
@@ -1110,7 +1140,8 @@ def contact_section():
                 elif not is_valid_email:
                     st.error("正しいメールアドレスの形式で入力してください。")
                 elif name and email and grade and desired_dept and strengthen_subjects and subject:
-                    sheet_saved = save_to_sheet(name, email, grade, desired_dept, strengthen_subjects, subject, message, date)
+                    message_with_time = f"【面談希望時間】{preferred_time}\n\n{message}" if message else f"【面談希望時間】{preferred_time}"
+                    sheet_saved = save_to_sheet(name, email, grade, desired_dept, strengthen_subjects, subject, message_with_time, date)
                     if sheet_saved:
                         st.success("✅ お申し込みありがとうございます！担当の政経生講師より2営業日以内にご連絡いたします。")
                     else:
