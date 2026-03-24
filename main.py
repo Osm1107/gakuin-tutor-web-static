@@ -27,7 +27,19 @@ st.set_page_config(
 )
 
 # --- Google Search Console 所有権確認 ---
+# st.markdown: <body>内へのフォールバック
 st.markdown('<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />', unsafe_allow_html=True)
+# components.html: <head>への直接インジェクション（クローラー対応）
+components.html("""
+    <script>
+        (function() {
+            var meta = window.parent.document.createElement('meta');
+            meta.name = 'google-site-verification';
+            meta.content = 'cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE';
+            window.parent.document.head.appendChild(meta);
+        })();
+    </script>
+""", height=0)
 
 # --- 2. Design System & Custom CSS ---
 def local_css():
