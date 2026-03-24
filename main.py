@@ -19,6 +19,9 @@ try:
 except Exception:
     recaptcha_component = None
 
+# GSV: query_params の読み取りは set_page_config より前でも安全
+_gsv_request = "gsv" in st.query_params
+
 st.set_page_config(
     page_title="早大学院生専用オンライン家庭教師 | 現役政経生による内部進学対策",
     page_icon="🎓",
@@ -27,30 +30,18 @@ st.set_page_config(
 )
 
 # --- Google Search Console 確認ファイル ルーティング ---
-# /app/static/googlee4acb1599c14c757.html として静的配信（enableStaticServing=true）
-# ?gsv=1 パラメータでもコンテンツを返す（フォールバック）
-_gsv_file = "googlee4acb1599c14c757.html"
-if st.query_params.get("gsv") == "1":
-    st.markdown(
-        f"google-site-verification: {_gsv_file}",
-        unsafe_allow_html=False,
-    )
+# 静的配信: /app/static/googlee4acb1599c14c757.html（enableStaticServing=true）
+# フォールバック: ?gsv をクエリに含む URL でもコンテンツを返す
+if _gsv_request:
+    st.markdown("google-site-verification: googlee4acb1599c14c757.html")
     st.stop()
 
-# --- Google Search Console メタタグ ---
-# st.markdown: <body>内へのフォールバック
-st.markdown('<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />', unsafe_allow_html=True)
-# components.html: <head>への直接インジェクション（クローラー対応）
-components.html("""
-    <script>
-        (function() {
-            var meta = window.parent.document.createElement('meta');
-            meta.name = 'google-site-verification';
-            meta.content = 'cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE';
-            window.parent.document.head.appendChild(meta);
-        })();
-    </script>
-""", height=0)
+# --- Google Search Console メタタグ（静的・JS非依存）---
+# JS依存の head インジェクションは ERR_BLOCKED_BY_CLIENT で失敗するため使用しない
+st.markdown(
+    '<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />',
+    unsafe_allow_html=True,
+)
 
 # --- 2. Design System & Custom CSS ---
 def local_css():
@@ -1311,6 +1302,11 @@ def contact_section():
             # reCAPTCHA
             site_key = st.secrets["recaptcha"]["site_key"]
             recaptcha_token = recaptcha_component(site_key=site_key, key="recaptcha")
+            st.markdown("""
+<div style="font-size:11px;color:#999;margin-top:6px;margin-bottom:4px;text-align:center;">
+    ⚠️ reCAPTCHA が表示されない場合は、<strong style="color:#777;">広告ブロック拡張機能をオフ</strong>にしてページを再読み込みしてください。
+</div>
+""", unsafe_allow_html=True)
 
             # Privacy Policy
             st.markdown("""
@@ -1372,9 +1368,12 @@ def contact_section():
                 is_human = verify_recaptcha_token(recaptcha_token)
                 if not is_human:
                     if not recaptcha_token:
-                        st.error("reCAPTCHAのチェックボックスをオンにしてください。ページをリロードして再試行してください。")
+                        st.error(
+                            "reCAPTCHA が表示されていない場合は、広告ブロック拡張機能（AdBlock 等）をオフにしてページを再読み込みしてください。"
+                            "表示されている場合はチェックを入れてから送信してください。"
+                        )
                     else:
-                        st.error("reCAPTCHA認証に失敗しました。")
+                        st.error("reCAPTCHA 認証に失敗しました。ページを再読み込みして再度お試しください。")
                 elif not is_valid_email:
                     st.error("正しいメールアドレスの形式で入力してください。")
                 elif name and email and grade and desired_dept and strengthen_subjects and subject:
