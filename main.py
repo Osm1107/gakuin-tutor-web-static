@@ -20,7 +20,7 @@ except Exception:
     recaptcha_component = None
 
 st.set_page_config(
-    page_title="Gakuin Tutor｜早大学院生専用オンライン家庭教師",
+    page_title="早大学院生専用オンライン家庭教師 | 現役政経生による内部進学対策",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -416,6 +416,74 @@ def local_css():
         }
         .stat-label { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.25rem; }
 
+        /* ── Flow Steps ── */
+        .flow-steps {
+            display: flex;
+            gap: 0;
+            align-items: flex-start;
+            margin: 0 0 2rem;
+        }
+        .flow-step {
+            flex: 1;
+            text-align: center;
+            padding: 0 0.75rem;
+            position: relative;
+        }
+        .flow-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -0.6rem;
+            top: 1.1rem;
+            font-size: 1.4rem;
+            color: var(--waseda-red);
+            font-weight: 900;
+        }
+        .flow-number {
+            width: 52px; height: 52px;
+            background: var(--waseda-red);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; font-weight: 900;
+            margin: 0 auto 0.75rem;
+            font-family: 'Noto Serif JP', serif;
+            box-shadow: 0 4px 12px rgba(142,32,52,0.3);
+        }
+        .flow-title {
+            font-weight: 700; font-size: 0.95rem;
+            margin-bottom: 0.4rem; color: var(--text-dark);
+        }
+        .flow-desc {
+            font-size: 0.82rem; color: var(--text-gray); line-height: 1.65;
+        }
+        .flow-card {
+            background: white; border-radius: 16px;
+            padding: 1.25rem 1rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* ── FAQ ── */
+        .faq-header-label {
+            font-size: 0.82rem; font-weight: 700;
+            color: var(--waseda-red); letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 0.4rem;
+        }
+
+        /* ── Urgency Banner ── */
+        .urgency-banner {
+            background: #FEF2F2;
+            border: 1.5px solid var(--waseda-red);
+            border-radius: 12px;
+            padding: 0.85rem 1.25rem;
+            text-align: center;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--waseda-red);
+            margin: 0 auto 2rem;
+            max-width: 680px;
+        }
+
         /* ════════════════════════════════════════
            RESPONSIVE / FLUID LAYOUT
            ════════════════════════════════════════ */
@@ -532,12 +600,50 @@ def local_css():
 
             /* divider の余白を縮小 */
             hr { margin: 1.5rem 0 !important; }
+
+            /* Flow: モバイルで縦積み */
+            .flow-steps {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+            }
+            .flow-step {
+                padding: 0 !important;
+            }
+            .flow-step:not(:last-child)::after {
+                content: "↓" !important;
+                position: static !important;
+                display: block;
+                margin: 0.5rem auto 0;
+                font-size: 1.2rem !important;
+            }
+
+            /* 緊急バナー */
+            .urgency-banner {
+                font-size: 0.82rem !important;
+                padding: 0.7rem 0.9rem !important;
+            }
         }
 
     </style>
     """, unsafe_allow_html=True)
 
 local_css()
+
+# --- SEO / SNS Meta Tags ---
+st.markdown("""
+    <meta name="description"
+          content="早大学院OBの現役政経生による、評定管理と大学準備に特化した家庭教師サービス。週2回の徹底サポート。">
+    <meta property="og:title"
+          content="早大学院生専用オンライン家庭教師 | 現役政経生による内部進学対策">
+    <meta property="og:description"
+          content="早大学院OBの現役政経生による、評定管理と大学準備に特化した家庭教師サービス。週2回の徹底サポート。">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title"
+          content="早大学院生専用オンライン家庭教師 | 現役政経生による内部進学対策">
+    <meta name="twitter:description"
+          content="早大学院OBの現役政経生による、評定管理と大学準備に特化した家庭教師サービス。週2回の徹底サポート。">
+""", unsafe_allow_html=True)
 
 # --- Scroll Preservation ---
 def inject_scroll_preservation():
@@ -924,6 +1030,96 @@ def comparison_section():
     st.markdown("<br><br>", unsafe_allow_html=True)
 
 
+def flow_section():
+    st.markdown("""
+        <div class="section-header">
+            <div class="section-eyebrow">HOW IT WORKS</div>
+            <h2>指導開始までの流れ</h2>
+            <p>お申し込みから指導スタートまで、最短1週間で開始できます。</p>
+        </div>
+        <div class="flow-steps">
+            <div class="flow-step">
+                <div class="flow-card">
+                    <div class="flow-number">1</div>
+                    <div class="flow-title">無料相談お申し込み</div>
+                    <div class="flow-desc">フォームより学年・志望学部・強化したい科目を送信。2営業日以内にご連絡します。</div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-card">
+                    <div class="flow-number">2</div>
+                    <div class="flow-title">オンライン面談</div>
+                    <div class="flow-desc">現役政経生スタッフによる状況ヒアリングと評定ロードマップのご提案。所要30分程度。</div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-card">
+                    <div class="flow-number">3</div>
+                    <div class="flow-title">体験指導（60分）</div>
+                    <div class="flow-desc">担当講師による実際の指導を体験。相性・スタイルをご確認いただけます。</div>
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-card">
+                    <div class="flow-number">4</div>
+                    <div class="flow-title">本契約・指導開始</div>
+                    <div class="flow-desc">ご契約後、週2回・月8回の定額指導をスタート。月次レポートで保護者様にもご報告。</div>
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+
+def faq_section():
+    st.markdown("""
+        <div class="section-header">
+            <div class="section-eyebrow">FAQ</div>
+            <h2>よくある質問</h2>
+            <p>お申し込み前によくいただくご質問をまとめました。</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    faqs = [
+        (
+            "指導はどのような形式で行われますか？",
+            "Google Meet または Zoom を使用した、完全オンラインの1対1指導です。専用の教材・ホワイトボードツールを活用し、対面授業と同水準の指導をご提供します。"
+        ),
+        (
+            "講師の変更は可能ですか？",
+            "はい、可能です。お子様との相性を最優先に考慮しております。体験指導後や指導開始後でも、ご要望があればいつでも講師変更のご相談を承ります。"
+        ),
+        (
+            "支払方法を教えてください。",
+            "クレジットカード決済または銀行振込に対応しております。詳細はオンライン面談の際にご案内いたします。月額制・前払い（当月分を前月末までにお支払い）となります。"
+        ),
+        (
+            "第二外国語だけでも受講できますか？",
+            "はい、可能です。ドイツ語・フランス語・ロシア語・中国語の各専門講師が在籍しております。スポット単発での受講もお気軽にご相談ください。"
+        ),
+        (
+            "中学部の生徒も受講できますか？",
+            "はい、早大学院中学部の在校生も対象としております。高校内部進学を見据えた基礎固めから、定期テスト対策まで幅広くサポートします。"
+        ),
+        (
+            "途中で退会することはできますか？",
+            "前月15日までにお申し出いただければ、翌月から退会が可能です。違約金等は一切発生しません。"
+        ),
+    ]
+
+    _, col_faq, _ = st.columns([1, 5, 1])
+    with col_faq:
+        for q, a in faqs:
+            with st.expander(f"Q：{q}"):
+                st.markdown(f"""
+                    <div style="padding:0.5rem 0.25rem;font-size:0.95rem;line-height:1.8;color:#374151;">
+                        <span style="font-weight:700;color:var(--waseda-red,#8E2034);">A：</span>{a}
+                    </div>
+                """, unsafe_allow_html=True)
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+
 def pricing_section():
     st.markdown("""
         <div class="section-header">
@@ -1034,6 +1230,12 @@ def contact_section():
                 <span>✅ 2営業日以内にご返信</span>
                 <span>✅ オンライン完結</span>
             </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+        <div class="urgency-banner">
+            ⚠️ 講師の質を維持するため、今月の新規受付は残り <u>3名様</u> までとさせていただいております。
         </div>
     """, unsafe_allow_html=True)
 
@@ -1175,6 +1377,9 @@ def main():
     features_section()
 
     st.divider()
+    flow_section()
+
+    st.divider()
     instructors_section()
 
     st.divider()
@@ -1182,14 +1387,57 @@ def main():
 
     pricing_section()
 
+    st.divider()
+    faq_section()
+
     contact_section()
 
     # Footer
     st.markdown("""
-        <div style="text-align:center;margin-top:5rem;padding:2.5rem 1rem;color:#9CA3AF;border-top:1px solid #E5E7EB;font-size:0.85rem;">
+        <div style="text-align:center;margin-top:5rem;padding:2.5rem 1rem;color:#9CA3AF;
+                    border-top:1px solid #E5E7EB;font-size:0.85rem;">
             <p style="font-weight:700;color:#6B7280;margin-bottom:0.5rem;">Gakuin Tutor</p>
             <p style="margin-bottom:0.25rem;">&copy; 2026 Gakuin Tutor. All rights reserved.</p>
-            <p>※ 本サービスは早稲田大学高等学院の公式サービスではありません。</p>
+            <p style="margin-bottom:1rem;">※ 本サービスは早稲田大学高等学院の公式サービスではありません。</p>
+            <details style="display:inline-block;text-align:left;max-width:560px;
+                            background:#F3F4F6;border-radius:10px;padding:0.75rem 1.25rem;
+                            border:1px solid #E5E7EB;font-size:0.78rem;color:#6B7280;">
+                <summary style="cursor:pointer;font-weight:700;color:#4B5563;
+                                list-style:none;display:flex;align-items:center;gap:0.5rem;">
+                    📋 特定商取引法に基づく表記
+                </summary>
+                <table style="width:100%;margin-top:0.75rem;border-collapse:collapse;
+                              font-size:0.78rem;line-height:1.8;">
+                    <tr>
+                        <td style="padding:0.3rem 0.75rem 0.3rem 0;font-weight:700;
+                                   white-space:nowrap;vertical-align:top;color:#4B5563;">運営者</td>
+                        <td style="padding:0.3rem 0;color:#6B7280;">早大学院生専用家庭教師 事務局</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.3rem 0.75rem 0.3rem 0;font-weight:700;
+                                   white-space:nowrap;vertical-align:top;color:#4B5563;">対価</td>
+                        <td style="padding:0.3rem 0;color:#6B7280;">各プランに記載の月額料金の通り（税込）</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.3rem 0.75rem 0.3rem 0;font-weight:700;
+                                   white-space:nowrap;vertical-align:top;color:#4B5563;">支払時期</td>
+                        <td style="padding:0.3rem 0;color:#6B7280;">前払い制（当月分を前月末日までにお支払いください）</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.3rem 0.75rem 0.3rem 0;font-weight:700;
+                                   white-space:nowrap;vertical-align:top;color:#4B5563;">返金・<br>キャンセル</td>
+                        <td style="padding:0.3rem 0;color:#6B7280;">
+                            サービスの性質上、指導実施後の返金は承りかねます。<br>
+                            退会は前月15日までにお申し出いただければ、翌月より解約となります。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.3rem 0.75rem 0.3rem 0;font-weight:700;
+                                   white-space:nowrap;vertical-align:top;color:#4B5563;">お問合せ</td>
+                        <td style="padding:0.3rem 0;color:#6B7280;">本サイトのお問い合わせフォームよりご連絡ください。</td>
+                    </tr>
+                </table>
+            </details>
         </div>
     """, unsafe_allow_html=True)
 
