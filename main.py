@@ -85,7 +85,7 @@ def local_css():
             border: 2px solid rgba(255,255,255,0.5);
             border-radius: 60px;
             padding: 0.7rem 2.5rem;
-            font-size: 1.55rem;
+            font-size: clamp(0.95rem, 3.5vw, 1.55rem);
             font-weight: 900;
             letter-spacing: 0.06em;
             margin-bottom: 2rem;
@@ -94,10 +94,10 @@ def local_css():
             text-shadow: 0 1px 6px rgba(0,0,0,0.25);
         }
         .hero-title {
-            font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+            font-size: clamp(1.55rem, 5.5vw, 4.2rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
-            line-height: 1.25;
+            line-height: 1.3;
             color: white !important;
         }
         .hero-title .highlight {
@@ -416,6 +416,124 @@ def local_css():
         }
         .stat-label { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.25rem; }
 
+        /* ════════════════════════════════════════
+           RESPONSIVE / FLUID LAYOUT
+           ════════════════════════════════════════ */
+
+
+        /* 強みセクション h3 のfluid typography */
+        .feature-h3 {
+            font-size: clamp(1.2rem, 2.8vw, 2rem);
+            margin-bottom: 0.75rem;
+            font-family: 'Noto Serif JP', serif;
+            font-weight: 700;
+        }
+
+        /* 比較表：PC では横スクロールをラップ */
+        .compare-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ── Mobile (≤ 768px) ── */
+        @media (max-width: 768px) {
+
+            /* Streamlit コンテナのマージン */
+            .block-container {
+                padding-left: 5% !important;
+                padding-right: 5% !important;
+                padding-top: 0 !important;
+            }
+
+            /* Hero */
+            .hero-container {
+                padding: 3rem 1rem 2.5rem !important;
+                border-radius: 0 0 28px 28px !important;
+                margin-bottom: 2rem !important;
+            }
+            .hero-eyebrow {
+                padding: 0.5rem 1.1rem !important;
+                letter-spacing: 0.03em !important;
+                margin-bottom: 1.25rem !important;
+            }
+            .hero-subtitle {
+                font-size: 0.95rem !important;
+                line-height: 1.75 !important;
+                max-width: 100% !important;
+            }
+            .hero-badges { gap: 0.4rem !important; }
+            .hero-badge {
+                font-size: 0.75rem !important;
+                padding: 0.35rem 0.6rem !important;
+            }
+
+            /* CTAボタン */
+            .btn-scroll {
+                font-size: 0.95rem !important;
+                padding: 0.7rem 1.6rem !important;
+            }
+
+            /* Stats bar */
+            .stats-bar {
+                gap: 1.25rem !important;
+                padding: 1rem 0.75rem !important;
+                margin-bottom: 2rem !important;
+            }
+            .stat-number { font-size: 1.4rem !important; }
+            .stat-label  { font-size: 0.72rem !important; }
+
+            /* セクションヘッダー */
+            .section-header { margin-bottom: 1.5rem !important; }
+            .section-header p { font-size: 0.88rem !important; }
+
+            /* 強みh3 */
+            .feature-h3 { font-size: 1.25rem !important; }
+
+            /* カード */
+            .card { padding: 1.1rem !important; }
+            .card-title { font-size: 1rem !important; }
+
+            /* 講師プロフィール */
+            .profile-card-body { padding: 0.85rem !important; }
+            .profile-message { font-size: 0.8rem !important; }
+
+            /* 料金カード */
+            .pricing-card { padding: 1.25rem !important; }
+            .pricing-price { font-size: 1.8rem !important; }
+
+            /* 比較表：横スクロール対応 */
+            .compare-table { font-size: 0.76rem !important; }
+            .compare-table th,
+            .compare-table td { padding: 0.55rem 0.6rem !important; }
+
+            /* Streamlit columns → モバイルで縦積み */
+            [data-testid="stHorizontalBlock"] {
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+            [data-testid="column"] {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+                min-width: 100% !important;
+            }
+
+            /* フォーム入力：iOS zoom 防止（16px以下でズームが発生する） */
+            .stTextInput  > div > div > input,
+            .stTextArea   > div > div > textarea,
+            .stSelectbox  > div > div > div {
+                font-size: 16px !important;
+            }
+
+            /* フォームボタン */
+            .stFormSubmitButton > button {
+                font-size: 0.95rem !important;
+                padding: 0.7rem 1rem !important;
+            }
+
+            /* divider の余白を縮小 */
+            hr { margin: 1.5rem 0 !important; }
+        }
+
     </style>
     """, unsafe_allow_html=True)
 
@@ -639,7 +757,7 @@ def features_section():
     with col1:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:2rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
+            <h3 class="feature-h3">🎓 講師全員が「学院→政経」ルート</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 教えるのは<strong>評定85点以上・特考上位</strong>で政経へ内部進学した現役早大生のみ。
                 同じカリキュラム、同じ先生の採点傾向、同じプレッシャーを乗り越えた経験が、
@@ -658,7 +776,7 @@ def features_section():
     with col2:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3 style="font-size:2rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
+            <h3 class="feature-h3">📊 評定を「取るための勉強」に変える</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 学院の評定は、なんとなくの勉強では上がりません。
                 <strong>教員ごとの出題傾向・採点基準・特考との配点バランス</strong>を把握したうえで、
@@ -758,6 +876,7 @@ def comparison_section():
     col1, col2, col3 = st.columns([1, 3, 1])
     with col2:
         st.markdown("""
+        <div class="compare-table-wrap">
         <table class="compare-table">
             <thead>
                 <tr>
@@ -799,6 +918,7 @@ def comparison_section():
                 </tr>
             </tbody>
         </table>
+        </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br><br>", unsafe_allow_html=True)
