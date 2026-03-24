@@ -386,7 +386,7 @@ def pain_points_section():
     st.markdown('<div class="section-header"><h2>こんな悩み、ありませんか？</h2></div>', unsafe_allow_html=True)
     
     try:
-        icon_b64 = get_image_as_base64("pronunciation_icon.png")
+        icon_b64 = get_image_as_base64("assets/pronunciation_icon.png")
         # Set width/height to 80px to match roughly 5rem font size of emojis
         icon_html = f'<img src="data:image/png;base64,{icon_b64}" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 1rem;">'
     except Exception:
@@ -436,7 +436,7 @@ def features_section():
         """, unsafe_allow_html=True)
         
         try:
-            campus_img_b64 = get_image_as_base64("waseda_classroom_new.jpg")
+            campus_img_b64 = get_image_as_base64("assets/waseda_classroom_new.jpg")
             st.markdown(f'<img src="data:image/png;base64,{campus_img_b64}" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1rem;">', unsafe_allow_html=True)
         except Exception:
             st.image("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800", caption="同じキャンパスを知る先輩が伴走します", use_container_width=True)
@@ -455,7 +455,7 @@ def features_section():
         """, unsafe_allow_html=True)
         
         try:
-            study_img_b64 = get_image_as_base64("waseda_okuma_statue.jpg")
+            study_img_b64 = get_image_as_base64("assets/waseda_okuma_statue.jpg")
             st.markdown(f'<img src="data:image/png;base64,{study_img_b64}" style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 1rem;">', unsafe_allow_html=True)
         except Exception:
             st.image("https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=800", caption="戦略的な学習計画を提案", use_container_width=True)
