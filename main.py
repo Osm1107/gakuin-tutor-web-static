@@ -91,10 +91,10 @@ def local_css():
             color: rgba(255,255,255,0.9);
         }
         .hero-title {
-            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-size: clamp(2.6rem, 5.5vw, 4.2rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
-            line-height: 1.3;
+            line-height: 1.25;
             color: white !important;
         }
         .hero-title .highlight {
@@ -145,6 +145,29 @@ def local_css():
             color: white !important;
         }
         div.stButton > button:active { transform: translateY(0); }
+
+        /* ── Anchor CTA Button (scroll bug fix) ── */
+        .btn-scroll {
+            display: inline-block;
+            background-color: var(--waseda-red);
+            color: white !important;
+            text-decoration: none;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(142,32,52,0.35);
+            cursor: pointer;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .btn-scroll:hover {
+            background-color: var(--waseda-red-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(142,32,52,0.4);
+            color: white !important;
+            text-decoration: none;
+        }
 
         /* ── Section ── */
         .section-header {
@@ -515,14 +538,16 @@ def hero_section():
         </div>
     """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("無料 評定診断に申し込む →", key="hero_cta", use_container_width=True):
-            components.html("""
-                <script>
-                    window.parent.document.getElementById('contact-form').scrollIntoView({behavior: 'smooth'});
-                </script>
-            """, height=0)
+    # CTA: 純粋HTMLアンカー — Streamlitのst.buttonによる再レンダリングを回避してスクロールバグを修正
+    st.markdown("""
+        <div style="text-align:center;margin-bottom:3rem;">
+            <a class="btn-scroll"
+               href="#"
+               onclick="window.parent.document.getElementById('contact-form').scrollIntoView({behavior:'smooth'}); return false;">
+                相談に申し込む(無料)
+            </a>
+        </div>
+    """, unsafe_allow_html=True)
 
     # Stats bar
     st.markdown("""
@@ -540,8 +565,8 @@ def hero_section():
                 <div class="stat-label">最難関学部への実績</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">¥4,000</div>
-                <div class="stat-label">入会金なし・1時間</div>
+                <div class="stat-number">月額制</div>
+                <div class="stat-label">週2回・入会金なし</div>
             </div>
         </div>
     """, unsafe_allow_html=True)
@@ -608,7 +633,7 @@ def features_section():
     with col1:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3>🎓 講師全員が「学院→政経」ルート</h3>
+            <h3 style="font-size:1.5rem;margin-bottom:0.75rem;">🎓 講師全員が「学院→政経」ルート</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 教えるのは<strong>評定85点以上・特考上位</strong>で政経へ内部進学した現役早大生のみ。
                 同じカリキュラム、同じ先生の採点傾向、同じプレッシャーを乗り越えた経験が、
@@ -627,7 +652,7 @@ def features_section():
     with col2:
         st.markdown("""
         <div style="padding:0.5rem;">
-            <h3>📊 評定を「取るための勉強」に変える</h3>
+            <h3 style="font-size:1.5rem;margin-bottom:0.75rem;">📊 評定を「取るための勉強」に変える</h3>
             <p style="font-size:1rem;line-height:1.9;color:#374151;">
                 学院の評定は、なんとなくの勉強では上がりません。
                 <strong>教員ごとの出題傾向・採点基準・特考との配点バランス</strong>を把握したうえで、
@@ -890,7 +915,7 @@ def pricing_section():
         <div class="section-header">
             <div class="section-eyebrow">PRICING</div>
             <h2>料金プラン</h2>
-            <p>入会金・教材費は一切かかりません。まずは無料の評定診断から。</p>
+            <p>全プラン共通：<strong>週2回（月8回）固定</strong>の月額制。入会金・教材費は一切かかりません。</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -899,14 +924,16 @@ def pricing_section():
     with col1:
         st.markdown("""
         <div class="pricing-card">
-            <h3 style="font-size:1.1rem;margin-bottom:0.25rem;">スポット相談</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">単発の質問・対策に</p>
-            <div class="pricing-price">¥4,000<span class="pricing-unit"> / 1時間</span></div>
+            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">A. スタンダード</h3>
+            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">内部進学の基礎固めに</p>
+            <div class="pricing-price">¥40,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
-                <li>✅ 定期テスト前の集中対策</li>
-                <li>✅ 第二外国語の単発指導</li>
-                <li>✅ 進路・学部相談</li>
-                <li>✅ 全科目対応</li>
+                <li>✅ 定期テスト・特考対策</li>
+                <li>✅ 第二外国語（独・仏・露・中）対応</li>
+                <li>✅ 全教科 対応</li>
+                <li>✅ LINEでの質問サポート</li>
+                <li>✅ 評定ロードマップ設計（初回）</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -914,16 +941,17 @@ def pricing_section():
     with col2:
         st.markdown("""
         <div class="pricing-card featured">
-            <div class="pricing-badge">人気 No.1</div>
-            <h3 style="font-size:1.1rem;margin-bottom:0.25rem;">内部進学 戦略コース</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">評定管理・継続指導</p>
-            <div class="pricing-price">¥4,000<span class="pricing-unit"> / 1時間</span></div>
+            <div class="pricing-badge">おすすめ</div>
+            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">B. プレミアム</h3>
+            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">政経ボーダー突破に</p>
+            <div class="pricing-price">¥50,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
-                <li>✅ 評定ロードマップ設計（初回）</li>
-                <li>✅ 全科目・第二外国語対応</li>
-                <li>✅ LINEでの質問サポート</li>
-                <li>✅ 月次進捗レポート</li>
-                <li>✅ 週1回〜 自由な頻度</li>
+                <li>✅ スタンダードの全内容</li>
+                <li>✅ 月次評定レポート（保護者向け）</li>
+                <li>✅ 学部別ボーダー管理シート</li>
+                <li>✅ 学院OBネットワーク情報共有</li>
+                <li>✅ 緊急フォロー授業（テスト前）</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -931,15 +959,16 @@ def pricing_section():
     with col3:
         st.markdown("""
         <div class="pricing-card">
-            <h3 style="font-size:1.1rem;margin-bottom:0.25rem;">早大入学準備<br>プログラム</h3>
-            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">進学確定後の先取り学習</p>
-            <div class="pricing-price">¥3,500<span class="pricing-unit"> / 1時間</span></div>
+            <h3 style="font-size:1.15rem;margin-bottom:0.25rem;">C. プラチナ</h3>
+            <p style="font-size:0.85rem;color:#666;margin-bottom:1rem;">大学入学後まで見据えた完全サポート</p>
+            <div class="pricing-price">¥50,000<span class="pricing-unit"> / 月（税込）</span></div>
+            <p style="font-size:0.8rem;color:#888;margin:0.25rem 0 1rem;">週2回・月8回 固定</p>
             <ul class="pricing-list">
-                <li>✅ 6ヶ月パッケージ割引</li>
-                <li>✅ レポート・論文読解指導</li>
-                <li>✅ TOEIC対策</li>
-                <li>✅ 先輩面談（学部別）</li>
-                <li>✅ 経済学・政治学 先取り</li>
+                <li>✅ プレミアムの全内容</li>
+                <li>✅ 早大入学準備プログラム込み</li>
+                <li>✅ アカデミックライティング指導</li>
+                <li>✅ キャリア・ゼミ選び 先輩面談</li>
+                <li>✅ TOEIC・学術英語 対策</li>
             </ul>
         </div>
         """, unsafe_allow_html=True)
@@ -951,13 +980,34 @@ def contact_section():
     st.markdown("""
         <div id="contact-form" class="section-header">
             <div class="section-eyebrow">FREE CONSULTATION</div>
-            <h2>無料 評定診断・お申し込み</h2>
+            <h2>無料相談・お申し込み</h2>
             <p>現在の評定と志望学部をお教えください。<br>
             政経進学に向けた具体的な戦略を、現役政経生講師がご提案します。</p>
         </div>
     """, unsafe_allow_html=True)
 
-    col_form, col_side = st.columns([3, 1])
+    # 「まずは気軽に」— フォーム直上に配置
+    st.markdown("""
+        <div style="max-width:680px;margin:0 auto 2.5rem;background:white;border-radius:20px;
+                    padding:1.75rem 2rem;border:1px solid #E5E7EB;
+                    box-shadow:0 2px 8px rgba(0,0,0,0.06);text-align:center;">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">📞</div>
+            <div style="font-weight:700;font-size:1.1rem;margin-bottom:0.5rem;
+                        font-family:'Noto Serif JP',serif;">まずは気軽にご相談ください</div>
+            <p style="font-size:0.9rem;color:#555;line-height:1.7;margin-bottom:1rem;">
+                現在の評定・志望学部を教えていただくだけで、<br>
+                政経ボーダーまでの差と対策方針をお伝えします。
+            </p>
+            <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;font-size:0.88rem;color:#444;">
+                <span>✅ 完全無料</span>
+                <span>✅ 入会の強制なし</span>
+                <span>✅ 2営業日以内にご返信</span>
+                <span>✅ オンライン完結</span>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    col_form, _ = st.columns([3, 1])
 
     with col_form:
         with st.form("contact_form"):
@@ -1068,24 +1118,6 @@ def contact_section():
                 else:
                     st.error("全ての必須項目を入力してください。")
 
-    with col_side:
-        st.markdown("""
-        <div class="card" style="text-align:center;padding:1.5rem;">
-            <div style="font-size:2rem;margin-bottom:0.75rem;">📞</div>
-            <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.5rem;">まずは気軽にご相談を</div>
-            <p style="font-size:0.82rem;color:#666;line-height:1.6;">
-                現在の評定・志望学部を教えていただくだけで、
-                政経ボーダーまでの差と対策方針をお伝えします。
-            </p>
-            <hr style="margin:1rem 0;border-color:#eee;">
-            <div style="font-size:0.82rem;color:#555;line-height:1.8;">
-                ✅ 完全無料<br>
-                ✅ 入会の強制なし<br>
-                ✅ 2営業日以内にご返信<br>
-                ✅ オンライン対応
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
 
 # ─────────────────────────────────────────
