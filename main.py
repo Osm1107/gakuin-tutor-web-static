@@ -26,6 +26,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# --- Google Search Console 所有権確認 ---
+st.markdown('<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />', unsafe_allow_html=True)
+
 # --- 2. Design System & Custom CSS ---
 def local_css():
     st.markdown("""
