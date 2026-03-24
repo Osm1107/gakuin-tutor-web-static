@@ -26,7 +26,18 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# --- Google Search Console 所有権確認 ---
+# --- Google Search Console 確認ファイル ルーティング ---
+# /app/static/googlee4acb1599c14c757.html として静的配信（enableStaticServing=true）
+# ?gsv=1 パラメータでもコンテンツを返す（フォールバック）
+_gsv_file = "googlee4acb1599c14c757.html"
+if st.query_params.get("gsv") == "1":
+    st.markdown(
+        f"google-site-verification: {_gsv_file}",
+        unsafe_allow_html=False,
+    )
+    st.stop()
+
+# --- Google Search Console メタタグ ---
 # st.markdown: <body>内へのフォールバック
 st.markdown('<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />', unsafe_allow_html=True)
 # components.html: <head>への直接インジェクション（クローラー対応）
