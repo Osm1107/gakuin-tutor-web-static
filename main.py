@@ -37,11 +37,22 @@ if _gsv_request:
     st.stop()
 
 # --- Google Search Console メタタグ（静的・JS非依存）---
-# JS依存の head インジェクションは ERR_BLOCKED_BY_CLIENT で失敗するため使用しない
 st.markdown(
     '<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />',
     unsafe_allow_html=True,
 )
+
+# --- Google Analytics 4 (GA4) Integration ---
+st.markdown("""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7JM9YVMZP3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7JM9YVMZP3');
+</script>
+""", unsafe_allow_html=True)
 
 # --- 2. Design System & Custom CSS ---
 def local_css():
