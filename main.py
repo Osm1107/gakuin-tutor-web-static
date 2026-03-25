@@ -36,13 +36,7 @@ if _gsv_request:
     st.markdown("google-site-verification: googlee4acb1599c14c757.html")
     st.stop()
 
-# --- Google Search Console メタタグ（静的・JS非依存）---
-st.markdown(
-    '<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />',
-    unsafe_allow_html=True,
-)
-
-# --- Google Analytics 4 (GA4) Integration ---
+# --- Google Analytics 4 (GA4) --- set_page_config 直後の最優先位置 ---
 st.markdown("""
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7JM9YVMZP3"></script>
@@ -53,6 +47,12 @@ st.markdown("""
   gtag('config', 'G-7JM9YVMZP3');
 </script>
 """, unsafe_allow_html=True)
+
+# --- Google Search Console メタタグ（静的・JS非依存）---
+st.markdown(
+    '<meta name="google-site-verification" content="cPMyEiaMj8oVvAvmAH4Ep8FoRcba-bB0OHow1QEClTE" />',
+    unsafe_allow_html=True,
+)
 
 # --- 2. Design System & Custom CSS ---
 def local_css():
