@@ -29,6 +29,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# --- Google Analytics 4 (GA4) Integration ---
+ga_code = """
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7JM9YVMZP3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7JM9YVMZP3');
+</script>
+"""
+st.markdown(ga_code, unsafe_allow_html=True)
+# --------------------------------------------
+
 # --- Google Search Console 確認ファイル ルーティング ---
 # 静的配信: /app/static/googlee4acb1599c14c757.html（enableStaticServing=true）
 # フォールバック: ?gsv をクエリに含む URL でもコンテンツを返す
