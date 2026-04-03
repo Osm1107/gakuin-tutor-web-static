@@ -104,10 +104,10 @@ if (form) {
             return;
         }
 
-        // Get reCAPTCHA token
+        // Get reCAPTCHA Enterprise token
         var recaptchaToken = '';
-        if (typeof grecaptcha !== 'undefined') {
-            recaptchaToken = grecaptcha.getResponse();
+        if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) {
+            recaptchaToken = grecaptcha.enterprise.getResponse();
         }
         if (!recaptchaToken) {
             showAlert('error', 'reCAPTCHA が表示されていない場合は、広告ブロック拡張機能（AdBlock 等）をオフにしてページを再読み込みしてください。表示されている場合はチェックを入れてから送信してください。');
@@ -144,11 +144,11 @@ if (form) {
                 showAlert('error', '送信に失敗しました。しばらく時間をおいて再度お試しください。');
                 btn.disabled = false;
                 btn.textContent = '評定診断・無料相談を申し込む →';
-                if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
             } else {
                 showAlert('success', '✅ お申し込みありがとうございます！担当の政経生講師より2営業日以内にご連絡いたします。');
                 form.reset();
-                if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
                 btn.disabled = false;
                 btn.textContent = '評定診断・無料相談を申し込む →';
                 // Re-init date
@@ -163,7 +163,7 @@ if (form) {
             showAlert('error', '送信に失敗しました。しばらく時間をおいて再度お試しください。');
             btn.disabled = false;
             btn.textContent = '評定診断・無料相談を申し込む →';
-            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+            if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
         });
     });
 }
