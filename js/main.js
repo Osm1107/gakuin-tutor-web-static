@@ -114,50 +114,45 @@ if (form) {
             return;
         }
 
-        // Build message
-        var fullMessage = '【面談希望時間】' + preferred_time;
+        // Build payload aligned with GAS parameter keys
+        var fullMessage = '【面談希望日】' + date + '\n【面談希望時間】' + preferred_time;
         if (message) fullMessage += '\n\n' + message;
 
         var payload = {
             name: name,
-            grade: grade,
-            faculty: faculty,
-            subjects: subjects.join(', '),
-            message: '【件名】' + subject + '\n\n' + fullMessage,
             email: email,
-            date: date,
-            recaptcha_token: recaptchaToken
+            grade: grade,
+            desired_dept: faculty,
+            strengthen_subjects: subjects.join(', '),
+            subject: subject,
+            message: fullMessage,
+            timestamp: new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })
         };
 
         var btn = document.getElementById('submit-btn');
         btn.disabled = true;
         btn.textContent = '送信中...';
 
+        // Use no-cors + text/plain to avoid CORS preflight issues with GAS redirects
         fetch(GAS_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload)
         })
-        .then(function(res) { return res.json(); })
-        .then(function(data) {
-            if (data && data.status === 'error') {
-                showAlert('error', '送信に失敗しました。しばらく時間をおいて再度お試しください。');
-                btn.disabled = false;
-                btn.textContent = '評定診断・無料相談を申し込む →';
-                if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
-            } else {
-                showAlert('success', '✅ お申し込みありがとうございます！担当の政経生講師より2営業日以内にご連絡いたします。');
-                form.reset();
-                if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
-                btn.disabled = false;
-                btn.textContent = '評定診断・無料相談を申し込む →';
-                // Re-init date
-                var dateInput = document.getElementById('field-date');
-                if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
-                // Reset multiselect text
-                var triggerText = document.querySelector('.multiselect-trigger-text');
-                if (triggerText) triggerText.textContent = '科目を選択（複数可）';
-            }
+        .then(function() {
+            // With no-cors the response is opaque; resolve = GAS received the request
+            showAlert('success', '✅ お申し込みありがとうございます！担当の政経生講師より2営業日以内にご連絡いたします。');
+            form.reset();
+            if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) grecaptcha.enterprise.reset();
+            btn.disabled = false;
+            btn.textContent = '評定診断・無料相談を申し込む →';
+            // Re-init date
+            var dateInput = document.getElementById('field-date');
+            if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+            // Reset multiselect text
+            var triggerText = document.querySelector('.multiselect-trigger-text');
+            if (triggerText) triggerText.textContent = '科目を選択（複数可）';
         })
         .catch(function() {
             showAlert('error', '送信に失敗しました。しばらく時間をおいて再度お試しください。');
