@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwJBvluzWVcpFZ2CeFS-dSL80iPXabCBeT1JlUdwaQn6GqSc6Wok3UouVj7lyyr8m7hng/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxvthVuLd3urcnDVPNkXHcaj3Jh5VUyhwpMJmDhOGxJ6HT25irCpK4lALH_FDW0_V8UHA/exec';
 
 // ── Smooth scroll for CTA button ──
 document.querySelectorAll('.btn-scroll').forEach(function(el) {
