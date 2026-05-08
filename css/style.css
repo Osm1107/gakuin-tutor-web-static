@@ -332,10 +332,13 @@ hr {
 .compare-table tr:hover td { background: #FEF8F8; }
 
 /* ── Pricing ── */
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+.pricing-single-wrap {
+    display: flex;
+    justify-content: center;
+}
+.pricing-single-wrap .pricing-card {
+    max-width: 480px;
+    width: 100%;
 }
 .pricing-card {
     background: white;
@@ -728,7 +731,6 @@ hr {
    ════════════════════════════════ */
 @media (max-width: 900px) {
     .instructors-grid { grid-template-columns: repeat(2, 1fr); }
-    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -770,7 +772,6 @@ hr {
     .profile-card-body { padding: 0.85rem; }
     .profile-message { font-size: 0.8rem; }
 
-    .pricing-grid { grid-template-columns: 1fr; }
     .pricing-card { padding: 1.25rem; }
     .pricing-price { font-size: 1.8rem; }
 
